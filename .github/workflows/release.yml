@@ -19,12 +19,38 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential pkg-config libx11-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev
+          sudo apt-get install -y build-essential pkg-config libx11-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev rpm
           
-      - name: Build Linux Release
+      - name: Setup RPM build environment
         run: |
-          make clean-linux
-          make build-linux
+          mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+          
+      - name: Build Binary and Packages
+        run: |
+          # Build binary
+          cargo build --release
+          
+          # Create RPM source
+          VERSION=$(grep '^version = ' Cargo.toml | cut -d '"' -f 2)
+          mkdir -p /tmp/ticket-tracker-${VERSION}
+          cp -r src/ Cargo.toml Cargo.lock assets/ /tmp/ticket-tracker-${VERSION}/
+          cd /tmp && tar czf ~/rpmbuild/SOURCES/ticket-tracker-${VERSION}.tar.gz ticket-tracker-${VERSION}/
+          
+          # Build RPM
+          cp .rpm/ticket-tracker.spec ~/rpmbuild/SPECS/
+          rpmbuild -ba ~/rpmbuild/SPECS/ticket-tracker.spec
+          
+          # Build DEB
+          cargo install cargo-deb
+          cargo deb
+          
+      - name: Prepare Release Directory
+        run: |
+          VERSION=$(grep '^version = ' Cargo.toml | cut -d '"' -f 2)
+          mkdir -p releases/linux
+          cp target/release/ticket-tracker releases/linux/
+          cp ~/rpmbuild/RPMS/x86_64/ticket-tracker-${VERSION}-*.rpm releases/linux/ || true
+          cp target/debian/ticket-tracker_${VERSION}*.deb releases/linux/ || true
           
       - name: Upload Linux Artifacts
         uses: actions/upload-artifact@v4
