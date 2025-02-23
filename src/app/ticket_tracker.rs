@@ -136,52 +136,9 @@ impl TicketTracker {
     }
 
     // WICHTIG: Direkte Sound-Implementierung wie im Backup
+    #[cfg(target_os = "windows")]
     fn play_success_sound() {
-        #[cfg(target_os = "windows")]
-        {
-            use winapi::um::mmsystem::PlaySoundW;
-            use std::os::windows::ffi::OsStrExt;
-            use std::ffi::OsStr;
-            
-            let sound_bytes = include_bytes!("../../assets/yeah.wav");
-            if let Ok(mut temp_file) = std::fs::File::create("temp_sound.wav") {
-                if std::io::Write::write_all(&mut temp_file, sound_bytes).is_ok() {
-                    let wide: Vec<u16> = OsStr::new("temp_sound.wav")
-                        .encode_wide()
-                        .chain(std::iter::once(0))
-                        .collect();
-                    
-                    unsafe {
-                        PlaySoundW(
-                            wide.as_ptr(),
-                            std::ptr::null_mut(),
-                            0x00020000 | 0x00000001, // SND_ASYNC | SND_FILENAME
-                        );
-                    }
-                    std::thread::spawn(|| {
-                        std::thread::sleep(std::time::Duration::from_secs(2));
-                        let _ = std::fs::remove_file("temp_sound.wav");
-                    });
-                }
-            }
-        }
-
-        #[cfg(target_os = "linux")]
-        {
-            use std::process::Command;
-            let sound_bytes = include_bytes!("../../assets/yeah.wav");
-            if let Ok(mut temp_file) = std::fs::File::create("temp_sound.wav") {
-                if std::io::Write::write_all(&mut temp_file, sound_bytes).is_ok() {
-                    let _ = Command::new("paplay")
-                        .arg("temp_sound.wav")
-                        .spawn();
-                    std::thread::spawn(|| {
-                        std::thread::sleep(std::time::Duration::from_secs(2));
-                        let _ = std::fs::remove_file("temp_sound.wav");
-                    });
-                }
-            }
-        }
+        platform::play_sound();
     }
 
     pub fn install_autostart() -> Result<(), Box<dyn std::error::Error>> {

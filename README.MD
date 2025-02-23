@@ -122,14 +122,24 @@ make build-windows
 
 For macOS:
 ```bash
+# Note: macOS builds can only be created on macOS systems
+# due to Apple's framework requirements and code signing
+
+# On macOS:
 make clean-macos
 make build-macos
+```
+
+# Alternative for macOS users:
+1. Clone the repository
+2. Install Rust and dependencies
+3. Run: cargo build --release
 ```
 
 The compiled binaries will be available in:
 - Linux: `releases/linux/`
 - Windows: `releases/windows/`
-- macOS: `releases/macos/` 
+- macOS: Build locally or download from releases page
 
 ## Usage
 

@@ -34,32 +34,44 @@ build-linux:
 	@echo "Linux builds complete. Check releases/linux/ directory"
 	@ls -l releases/linux/
 
+# ... existing code ...
+
 .PHONY: build-windows
 build-windows:
 	@echo "Building Windows release..."
-	# Install Windows target
+	# Install Windows target and dependencies
 	rustup target add x86_64-pc-windows-gnu
-	# Build Windows binary
-	cargo build --release --target x86_64-pc-windows-gnu
-	# Copy results
+	# Ensure MinGW is installed for Windows cross-compilation
+	which x86_64-w64-mingw32-gcc || echo "Please install mingw-w64"
+	# Build Windows binary with static linking
+	RUSTFLAGS="-C target-feature=+crt-static" cargo build --release --target x86_64-pc-windows-gnu
+	# Create installer directory
 	mkdir -p releases/windows
+	# Copy binary and assets
 	cp target/x86_64-pc-windows-gnu/release/ticket-tracker.exe releases/windows/
+	cp -r assets releases/windows/
 	@echo "Windows build complete. Check releases/windows/ directory"
 	@ls -l releases/windows/
 
 .PHONY: build-macos
 build-macos:
-	@echo "Building macOS release..."
-	# Install macOS target
-	rustup target add x86_64-apple-darwin
-	# Build macOS binary
-	cargo build --release --target x86_64-apple-darwin
-	# Create directory
-	mkdir -p releases/macos
-	# Copy binary
-	-cp target/x86_64-apple-darwin/release/ticket-tracker releases/macos/
-	@echo "macOS builds complete. Check releases/macos/ directory"
-	@ls -l releases/macos/
+	@echo "Note: macOS builds must be performed on a macOS system"
+	@if [ "$$(uname)" = "Darwin" ]; then \
+		echo "Building macOS release..."; \
+		rustup target add x86_64-apple-darwin aarch64-apple-darwin; \
+		cargo build --release --target x86_64-apple-darwin; \
+		cargo build --release --target aarch64-apple-darwin; \
+		mkdir -p releases/macos/TicketTracker.app/Contents/{MacOS,Resources}; \
+		lipo "target/x86_64-apple-darwin/release/ticket-tracker" \
+			"target/aarch64-apple-darwin/release/ticket-tracker" \
+			-create -output "releases/macos/TicketTracker.app/Contents/MacOS/ticket-tracker"; \
+		cp -r assets releases/macos/TicketTracker.app/Contents/Resources/; \
+		cp packaging/macos/Info.plist releases/macos/TicketTracker.app/Contents/; \
+		echo "macOS builds complete. Check releases/macos/ directory"; \
+		ls -l releases/macos/TicketTracker.app/Contents/MacOS/; \
+	else \
+		echo "Skipping macOS build on non-macOS system..."; \
+	fi
 
 .PHONY: install
 install:
