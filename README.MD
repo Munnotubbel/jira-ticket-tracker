@@ -44,7 +44,7 @@ xcode-select --install
 
 ### Download Pre-built Binaries (Recommended)
 
-Download the latest binaries from our [builds branch](https://github.com/munnotubbel/jira-ticket-tracker/tree/releases).
+Download the latest binaries from our [builds branch](https://github.com/Munnotubbel/jira-ticket-tracker/tree/main/releases).
 
 ```bash
 # Debian/Ubuntu
