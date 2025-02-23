@@ -1,5 +1,5 @@
 [package]
-name = "ticket-ticker"
+name = "ticket-tracker"
 version = "0.1.0"
 edition = "2021"
 authors = ["Marcus Weissohn Eede <marcus.weissohn@gmail.com>"]
@@ -8,7 +8,7 @@ license = "MIT"
 readme = "README.md"
 
 [dependencies]
-eframe = "0.22.0"
+eframe = { version = "0.22.0", features = ["persistence"] }
 egui = "0.22.0"
 chrono = "0.4.31"
 directories = "5.0.1"
@@ -19,20 +19,49 @@ toml = "0.8"
 rust_xlsxwriter = "0.42"
 regex = "1.10"
 calamine = "0.22.1"
+dirs = "5.0"
+
 
 [target.'cfg(target_os = "windows")'.dependencies]
-winapi = { version = "0.3", features = ["mmsystem"] }
+winapi = { version = "0.3", features = [
+    "winuser",
+    "windef",
+    "minwindef",
+    "shellapi",
+    "mmsystem",
+    "commctrl",
+    "sysinfoapi"
+] }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+cocoa = "0.24.1"
+objc = "0.2.7"
+
+[package.metadata.rpm]
+package = "ticket-tracker"
+release = "1"
+license = "MIT"
+group = "Applications/System"
+summary = "A desktop application for easy JIRA ticket tracking with visual feedback"
+requires = ["libxcb"]
+
+[package.metadata.rpm.cargo]
+buildflags = ["--release"]
+
+[package.metadata.rpm.targets]
+ticket-tracker = { path = "/usr/bin/ticket-tracker" }
+"ticket-tracker.1" = { path = "/usr/share/man/man1/ticket-tracker.1" }
 
 [package.metadata.deb]
-assets = [
-    ["target/release/ticket-ticker", "usr/bin/", "755"],
-    ["ticket-ticker.1", "usr/share/man/man1/", "644"],
-]
 maintainer = "Marcus Weissohn Eede <marcus.weissohn@gmail.com>"
 copyright = "2024, Marcus Weissohn Eede <marcus.weissohn@gmail.com>"
-depends = "$auto"
+depends = "$auto, libxcb1"
 section = "utility"
 priority = "optional"
+assets = [
+    ["target/release/ticket-tracker", "usr/bin/", "755"],
+    ["ticket-tracker.1", "usr/share/man/man1/", "644"],
+]
 extended-description = """
 A desktop application that helps track JIRA tickets.
 Features include:
@@ -41,9 +70,3 @@ Features include:
  * Sound feedback
  * Autostart capability
 """
-
-[package.metadata.rpm]
-package = "ticket-ticker"
-release = "1"
-license = "MIT"
-group = "Applications/Productivity"

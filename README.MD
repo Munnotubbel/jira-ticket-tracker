@@ -1,4 +1,4 @@
-# TicketTicker
+# Tickettracker
 
 A desktop application for easy JIRA ticket tracking. The app displays a small window with a reactive face that changes based on the time since the last recorded ticket.
 
@@ -59,58 +59,77 @@ xcode-select --install
 #### Debian/Ubuntu
 ```bash
 # Download the .deb package
-wget https://github.com/munnotubbel/ticket-ticker/releases/latest/download/ticket-ticker.deb
+wget https://github.com/munnotubbel/ticket-tracker/releases/latest/download/ticket-tracker.deb
 
 # Install the package
-sudo dpkg -i ticket-ticker.deb
+sudo dpkg -i ticket-tracker.deb
 ```
 
 #### Fedora/RHEL
 ```bash
 # Download the .rpm package
-wget https://github.com/munnotubbel/ticket-ticker/releases/latest/download/ticket-ticker.rpm
+wget https://github.com/munnotubbel/ticket-tracker/releases/latest/download/ticket-tracker.rpm
 
 # Install the package
-sudo rpm -i ticket-ticker.rpm
+sudo rpm -i ticket-tracker.rpm
 ```
 
 #### macOS
 ```bash
 # Using Homebrew
-brew tap munnotubbel/ticket-ticker
-brew install ticket-ticker
+brew tap munnotubbel/ticket-tracker
+brew install ticket-tracker
 ```
 
 #### Windows
-- Download and run the installer (ticket-ticker-setup.exe) from the releases page
+- Download and run the installer (ticket-tracker-setup.exe) from the releases page
 
 After installation, you can:
-- Start the app by typing `ticket-ticker` in your terminal
-- View the manual with `man ticket-ticker` (Linux/macOS)
+- Start the app by typing `ticket-tracker` in your terminal
+- View the manual with `man ticket-tracker` (Linux/macOS)
 - Find it in your start menu (Windows)
 
 ### Method 2: Building from Source
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/ticket-ticker.git
-cd ticket-ticker
+git clone https://github.com/yourusername/ticket-tracker.git
+cd ticket-tracker
 ```
 
 2. Build the app:
+
+For Linux:
 ```bash
-cargo build --release
+# Install required build dependencies
+sudo dnf install make gcc rpm-build rpmdevtools   # Fedora/RHEL
+# or
+sudo apt install make gcc rpm build-essential     # Debian/Ubuntu
+
+# Build Linux packages
+make clean-linux
+make build-linux
 ```
 
-3. Install the app (optional):
+For Windows:
 ```bash
-# Linux/macOS
-sudo make install
+# Ensure you have the Windows GNU toolchain
+rustup target add x86_64-pc-windows-gnu
 
-# Or manually
-sudo cp target/release/ticket-ticker /usr/local/bin/
-sudo cp ticket-ticker.1 /usr/share/man/man1/
+make clean-windows
+make build-windows
 ```
+
+For macOS:
+```bash
+make clean-macos
+make build-macos
+```
+
+The compiled binaries will be available in:
+- Linux: `releases/linux/`
+- Windows: `releases/windows/`
+- macOS: `releases/macos/` 
 
 ## Usage
 
@@ -118,19 +137,19 @@ sudo cp ticket-ticker.1 /usr/share/man/man1/
 
 ```bash
 # Start the app
-./target/release/ticket-ticker
+./target/release/ticket-tracker
 
 # Show help
-./target/release/ticket-ticker --help
+./target/release/ticket-tracker --help
 
 # Install app for autostart
-./target/release/ticket-ticker --install
+./target/release/ticket-tracker --install
 
 # Remove app from autostart
-./target/release/ticket-ticker --uninstall
+./target/release/ticket-tracker --uninstall
 
 # Quit all running instances
-./target/release/ticket-ticker --quit
+./target/release/ticket-tracker --quit
 ```
 
 ### Ticket Entry
@@ -151,7 +170,7 @@ The app stores its configuration in:
 
 ## Project Structure
 ```tree
-ticket-ticker/
+ticket-tracker/
 ├── src/
 │   ├── main.rs          # Main program
 │   └── ...
@@ -159,7 +178,7 @@ ticket-ticker/
 │   ├── face_*.png       # Face expressions
 │   └── yeah.wav         # Success sound
 ├── Cargo.toml           # Project dependencies
-├── ticket-ticker.1      # Man page
+├── ticket-tracker.1      # Man page
 └── README.md           # This file
 ```
 
@@ -187,5 +206,5 @@ The app outputs errors to the console. Start it from a terminal/command prompt t
 
 Marcus Weissohn Eede - [@yourtwitter](https://twitter.com/munnotubbel) - marcus.weissohn@gmail.com
 
-Project Link: [https://github.com/munnotubbel/ticket-ticker](https://github.com/munnotubbel/ticket-ticker)
+Project Link: [https://github.com/munnotubbel/ticket-tracker](https://github.com/munnotubbel/ticket-tracker)
 

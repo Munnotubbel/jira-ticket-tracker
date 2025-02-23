@@ -1,0 +1,54 @@
+.TH TICKET-TRACKER 1 "February 2024" "ticket-tracker 0.1.0" "User Commands"
+.SH NAME
+ticket-tracker \- JIRA ticket tracking application with visual feedback
+.SH SYNOPSIS
+.B ticket-tracker
+[\fIOPTIONS\fR]
+.SH DESCRIPTION
+.B ticket-tracker
+is a desktop application that helps track JIRA tickets with visual feedback.
+It displays a small window with a reactive face that changes based on the
+time since the last recorded ticket.
+.SH OPTIONS
+.TP
+.BR \-h ", " \-\-help
+Display help message and exit
+.TP
+.BR \-\-install
+Install the application for autostart
+.TP
+.BR \-\-uninstall
+Remove the application from autostart
+.TP
+.BR \-\-quit
+Quit all running instances of the application
+.SH USAGE
+Click in the input field and enter a ticket number in JIRA format (e.g., PROJ-123).
+Press Enter to save the ticket. The face will change based on the time since the
+last ticket was entered:
+.IP \[bu] 2
+Happy face: < 5 minutes
+.IP \[bu]
+Neutral face: 5-10 minutes
+.IP \[bu]
+Sad face: > 10 minutes
+.PP
+Tickets are automatically saved to an Excel file in your Documents folder:
+.IP \[bu] 2
+Windows: %USERPROFILE%\\Documents\\tickets.xlsx
+.IP \[bu]
+Linux/macOS: ~/Documents/tickets.xlsx
+.SH FILES
+.TP
+.I ~/Documents/tickets.xlsx
+Excel file containing saved tickets
+.TP
+.I ~/.config/ticket-tracker/config.toml
+Configuration file
+.SH AUTHOR
+Written by Marcus Weissohn Eede <marcus.weissohn@gmail.com>
+.SH BUGS
+Report bugs to: https://github.com/munnotubbel/ticket-tracker/issues
+.SH COPYRIGHT
+Copyright \(co 2024 Marcus Weissohn Eede.
+License MIT: <https://opensource.org/licenses/MIT> 
