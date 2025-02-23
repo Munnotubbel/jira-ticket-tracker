@@ -44,7 +44,7 @@ xcode-select --install
 
 ### Download Pre-built Binaries (Recommended)
 
-Download the latest release for your platform from our [releases page](https://github.com/munnotubbel/ticket-tracker/releases).
+Download the latest release for your platform from our [releases page](https://github.com/munnotubbel/jira-ticket-tracker/releases).
 
 ```bash
 # Debian/Ubuntu
@@ -64,8 +64,8 @@ sudo rpm -i ticket-tracker.rpm
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/munnotubbel/ticket-tracker.git
-cd ticket-tracker
+git clone https://github.com/munnotubbel/jira-ticket-tracker.git
+cd jira-ticket-tracker
 
 # 2. Build for your platform
 make build-linux    # For Linux
@@ -140,5 +140,5 @@ Run from terminal to see error messages: `ticket-tracker --debug`
 
 Marcus Weissohn Eede - [@munnotubbel](https://twitter.com/munnotubbel) - marcus.weissohn@gmail.com
 
-Project Link: [https://github.com/munnotubbel/ticket-tracker](https://github.com/munnotubbel/ticket-tracker)
+Project Link: [https://github.com/munnotubbel/jira-ticket-tracker](https://github.com/munnotubbel/jira-ticket-tracker)
 
