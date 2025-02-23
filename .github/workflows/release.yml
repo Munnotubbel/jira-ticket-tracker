@@ -27,7 +27,7 @@ jobs:
           make build-linux
           
       - name: Upload Linux Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: linux-release
           path: releases/linux/
@@ -49,7 +49,7 @@ jobs:
           make build-windows
           
       - name: Upload Windows Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: windows-release
           path: releases/windows/
@@ -73,7 +73,7 @@ jobs:
           make build-macos
           
       - name: Upload macOS Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: macos-release
           path: releases/macos/
@@ -84,7 +84,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     steps:
       - name: Download All Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -108,7 +108,7 @@ jobs:
           ref: releases
           
       - name: Download All Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         
       - name: Update Release Files
         run: |
