@@ -12,38 +12,9 @@ A desktop application for easy JIRA ticket tracking. The app displays a small wi
 - Always-on-top window
 - Drag & drop positioning
 
-## System Requirements
+## Installation
 
-### Rust Installation
-
-```bash
-# Windows: Visit https://rustup.rs and run the installer
-# Linux/macOS:
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
-
-### Additional Dependencies
-
-```bash
-# Debian/Ubuntu
-sudo apt-get update
-sudo apt-get install build-essential pkg-config libx11-dev libxcb-render0-dev \
-  libxcb-shape0-dev libxcb-xfixes0-dev libasound2-dev
-
-# Fedora
-sudo dnf group install "C Development Tools and Libraries"
-sudo dnf install pkg-config libX11-devel libxcb-devel alsa-lib-devel
-
-# macOS
-xcode-select --install
-
-# Windows
-# Install Visual Studio Build Tools with C++ support
-```
-
-## Installation & Updates
-
-### Pre-built Binaries
+### Option 1: Pre-built Binaries (Recommended)
 
 Download the latest release from our [GitHub Releases page](https://github.com/munnotubbel/jira-ticket-tracker/releases).
 
@@ -78,7 +49,7 @@ sudo rpm -e ticket-tracker
 ticket-tracker-setup.exe
 
 # Uninstall
-# Via Windows Settings > Apps > Apps & Features
+# Via Windows Settings > Apps & Features
 # OR
 Control Panel > Programs > Uninstall a Program
 ```
@@ -95,21 +66,48 @@ Control Panel > Programs > Uninstall a Program
 # Drag from Applications to Trash
 ```
 
-### Building from Source
+### Option 2: Building from Source
 
-1. Install Rust and dependencies (see System Requirements)
+#### System Requirements
 
-2. Clone and build:
+1. **Rust Installation**
 ```bash
-# Clone repository
+# Windows: Visit https://rustup.rs and run the installer
+# Linux/macOS:
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+2. **Development Dependencies**
+```bash
+# Debian/Ubuntu
+sudo apt-get update
+sudo apt-get install build-essential pkg-config libx11-dev libxcb-render0-dev \
+  libxcb-shape0-dev libxcb-xfixes0-dev libasound2-dev
+
+# Fedora
+sudo dnf group install "C Development Tools and Libraries"
+sudo dnf install pkg-config libX11-devel libxcb-devel alsa-lib-devel
+
+# macOS
+xcode-select --install
+
+# Windows
+# Install Visual Studio Build Tools with C++ support
+```
+
+#### Build Instructions
+
+1. Clone the repository:
+```bash
 git clone https://github.com/munnotubbel/jira-ticket-tracker.git
 cd jira-ticket-tracker
+```
 
-# Build for your system
+2. Build for your system:
+```bash
 make build-linux    # For Linux
 make build-windows  # For Windows
 make build-macos    # For macOS
-
 # Or build for all platforms
 make build-all
 ```
