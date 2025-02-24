@@ -5,7 +5,7 @@ pub fn quit_all() {
     {
         Command::new("pkill")
             .arg("-f")
-            .arg("ticket-ticker")
+            .arg("ticket-tracker")
             .output()
             .ok();
     }
@@ -15,7 +15,7 @@ pub fn quit_all() {
         Command::new("taskkill")
             .arg("/F")
             .arg("/IM")
-            .arg("ticket-ticker.exe")
+            .arg("ticket-tracker.exe")
             .output()
             .ok();
     }
@@ -24,7 +24,7 @@ pub fn quit_all() {
     {
         Command::new("pkill")
             .arg("-f")
-            .arg("ticket-ticker")
+            .arg("ticket-tracker")
             .output()
             .ok();
     }

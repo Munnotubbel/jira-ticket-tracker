@@ -7,9 +7,9 @@ on:
 
 # Add permissions configuration
 permissions:
-  contents: write      # Für Push und Release-Erstellung
-  actions: read       # Für Artifact-Download
-  packages: write     # Falls du später Packages veröffentlichen möchtest
+  contents: write      # For push and release creation
+  actions: read       # For artifact download
+  packages: write     # For future package publishing
 
 jobs:
   build-linux:
@@ -131,7 +131,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Vollständige Git-Historie
+          fetch-depth: 0  # Full Git history
           
       - name: Create releases branch if not exists
         run: |

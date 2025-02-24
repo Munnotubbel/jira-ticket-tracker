@@ -36,7 +36,7 @@ impl TicketTracker {
             include_bytes!("../../assets/face_7.png").as_ref(),
         ];
 
-        // Lade die eingebetteten Bilder
+        // Load embedded images
         for (i, image_bytes) in face_images.iter().enumerate() {
             if let Ok(img) = image::load_from_memory(image_bytes) {
                 let img = img.to_rgba8();
@@ -51,7 +51,7 @@ impl TicketTracker {
             }
         }
 
-        // Lade das Success-Face
+        // Load success face
         let success_texture = if let Ok(img) = image::load_from_memory(include_bytes!("../../assets/face_100.png")) {
             let img = img.to_rgba8();
             let size = [img.width() as usize, img.height() as usize];
@@ -62,7 +62,7 @@ impl TicketTracker {
                 Default::default(),
             ))
         } else {
-            eprintln!("Fehler beim Laden des Success-Face!");
+            eprintln!("Error loading success face!");
             None
         };
 
@@ -95,7 +95,7 @@ impl TicketTracker {
         index.min(7)
     }
 
-    fn submit_ticket(&mut self, ctx: &egui::Context) -> Result<(), Box<dyn std::error::Error>> {
+    fn submit_ticket(&mut self, ctx: &egui::Context) -> Result<(), String> {
         if self.input.text.trim().is_empty() {
             return Ok(());
         }
@@ -126,7 +126,7 @@ impl TicketTracker {
         let excel_handler = self.excel_handler.clone();
         std::thread::spawn(move || {
             if let Err(e) = excel_handler.save_ticket(&ticket, now) {
-                eprintln!("Fehler beim Speichern des Tickets: {}", e);
+                eprintln!("Error saving ticket: {}", e);
             }
         });
 

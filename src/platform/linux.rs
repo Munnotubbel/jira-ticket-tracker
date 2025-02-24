@@ -31,12 +31,12 @@ pub fn install_autostart() -> Result<(), Box<dyn std::error::Error>> {
     let autostart_dir = format!("{}/.config/autostart", home);
     std::fs::create_dir_all(&autostart_dir)?;
 
-    let desktop_file = format!("{}/ticket-ticker.desktop", autostart_dir);
+    let desktop_file = format!("{}/ticket-tracker.desktop", autostart_dir);
     let mut file = std::fs::File::create(desktop_file)?;
     write!(file, r#"[Desktop Entry]
 Type=Application
-Name=TicketTicker
-Exec=ticket-ticker
+Name=TicketTracker
+Exec=ticket-tracker
 Terminal=false
 Categories=Utility;
 "#)?;
@@ -46,7 +46,7 @@ Categories=Utility;
 
 pub fn uninstall_autostart() -> Result<(), Box<dyn std::error::Error>> {
     let home = std::env::var("HOME")?;
-    let desktop_file = format!("{}/.config/autostart/ticket-ticker.desktop", home);
+    let desktop_file = format!("{}/.config/autostart/ticket-tracker.desktop", home);
     if std::path::Path::new(&desktop_file).exists() {
         std::fs::remove_file(desktop_file)?;
     }
