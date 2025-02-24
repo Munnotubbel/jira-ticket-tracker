@@ -43,37 +43,39 @@ xcode-select --install
 
 ## Installation & Updates
 
-### Debian/Ubuntu
-```bash
-# Installation
-sudo dpkg -i ticket-tracker.deb
+### Pre-built Binaries
 
-# Update to new version
-sudo dpkg -i ticket-tracker-new.deb
+Download the latest release from our [GitHub Releases page](https://github.com/munnotubbel/jira-ticket-tracker/releases).
+
+#### Debian/Ubuntu
+```bash
+# Install
+sudo dpkg -i ticket-tracker_[version].deb
+
+# Update
+sudo dpkg -i ticket-tracker_[new-version].deb
 
 # Uninstall
 sudo dpkg -r ticket-tracker
 ```
 
-### Fedora/RHEL
+#### Fedora/RHEL
 ```bash
-# Installation
-sudo rpm -i ticket-tracker.rpm
+# Install
+sudo rpm -i ticket-tracker-[version].rpm
 
-# Update to new version
-sudo rpm -U ticket-tracker-new.rpm
+# Update
+sudo rpm -U ticket-tracker-[new-version].rpm
 
 # Uninstall
 sudo rpm -e ticket-tracker
 ```
 
-### Windows
+#### Windows
 ```powershell
-# Installation
+# Install/Update
+# Run the installer from GitHub Releases
 ticket-tracker-setup.exe
-
-# Update
-# Simply install new version, it will automatically replace the old one
 
 # Uninstall
 # Via Windows Settings > Apps > Apps & Features
@@ -81,16 +83,47 @@ ticket-tracker-setup.exe
 Control Panel > Programs > Uninstall a Program
 ```
 
-### macOS
+#### macOS
 ```bash
-# Installation
-# Open DMG and drag to Applications
+# Install
+# Download .dmg, open and drag to Applications
 
 # Update
 # Drag new version to Applications, confirm overwrite
 
 # Uninstall
-# Drag app from Applications to Trash
+# Drag from Applications to Trash
+```
+
+### Building from Source
+
+1. Install Rust and dependencies (see System Requirements)
+
+2. Clone and build:
+```bash
+# Clone repository
+git clone https://github.com/munnotubbel/jira-ticket-tracker.git
+cd jira-ticket-tracker
+
+# Build for your system
+make build-linux    # For Linux
+make build-windows  # For Windows
+make build-macos    # For macOS
+
+# Or build for all platforms
+make build-all
+```
+
+3. Install (Linux/macOS):
+```bash
+# Install system-wide (requires sudo)
+sudo make install
+
+# Install to custom location
+make install PREFIX=~/.local
+
+# Uninstall
+sudo make uninstall
 ```
 
 ## Usage
@@ -133,11 +166,7 @@ ticket-tracker/
 ├── assets/           # Resources
 │   ├── face_*.png    # Face expressions
 │   └── yeah.wav      # Success sound
-├── releases/         # Build artifacts
-│   ├── linux/        # Linux binaries
-│   ├── windows/      # Windows binaries
-│   ├── macos/        # macOS binaries
-│   └── README.md     # Release instructions
+├── .github/          # GitHub Actions workflows
 ├── Cargo.toml        # Dependencies
 └── README.md         # Documentation
 ```
