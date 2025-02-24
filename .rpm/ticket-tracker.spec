@@ -12,7 +12,6 @@ Source0: %{name}-%{version}.tar.gz
 URL: https://github.com/munnotubbel/ticket-tracker
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: cargo gcc make
 
 %description
 A desktop application that helps track JIRA tickets with visual feedback.
