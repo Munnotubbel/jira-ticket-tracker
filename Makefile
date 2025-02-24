@@ -13,6 +13,10 @@ build-linux:
 	# Create build directories
 	mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 	mkdir -p /tmp/ticket-tracker-$(VERSION)
+	mkdir -p .rpm
+	
+	# Ensure spec file exists
+	[ -f .rpm/ticket-tracker.spec ] || cp packaging/rpm/ticket-tracker.spec .rpm/
 	
 	# Create source tarball
 	cp -r src/ Cargo.toml Cargo.lock assets/ ticket-tracker.1 /tmp/ticket-tracker-$(VERSION)/

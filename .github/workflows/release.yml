@@ -29,22 +29,16 @@ jobs:
           
       - name: Build Binary and Packages
         run: |
-          # Build binary
-          cargo build --release
+          # Ensure RPM spec directory exists
+          mkdir -p .rpm
           
-          # Create RPM source
-          VERSION=$(grep '^version = ' Cargo.toml | cut -d '"' -f 2)
-          mkdir -p /tmp/ticket-tracker-${VERSION}
-          cp -r src/ Cargo.toml Cargo.lock assets/ /tmp/ticket-tracker-${VERSION}/
-          cd /tmp && tar czf ~/rpmbuild/SOURCES/ticket-tracker-${VERSION}.tar.gz ticket-tracker-${VERSION}/
+          # Copy spec file from templates if not exists
+          if [ ! -f .rpm/ticket-tracker.spec ]; then
+            cp packaging/rpm/ticket-tracker.spec .rpm/
+          fi
           
-          # Build RPM
-          cp .rpm/ticket-tracker.spec ~/rpmbuild/SPECS/
-          rpmbuild -ba ~/rpmbuild/SPECS/ticket-tracker.spec
-          
-          # Build DEB
-          cargo install cargo-deb
-          cargo deb
+          # Build packages
+          make build-linux
           
       - name: Prepare Release Directory
         run: |

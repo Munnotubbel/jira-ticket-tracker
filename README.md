@@ -41,37 +41,56 @@ xcode-select --install
 # Install Visual Studio Build Tools with C++ support
 ```
 
-## Installation
+## Installation & Updates
 
-### Download Pre-built Binaries (Recommended)
-
-Download the latest binaries from our [builds branch](https://github.com/Munnotubbel/jira-ticket-tracker/tree/main/releases).
-
+### Debian/Ubuntu
 ```bash
-# Debian/Ubuntu
+# Installation
 sudo dpkg -i ticket-tracker.deb
 
-# Fedora/RHEL
-sudo rpm -i ticket-tracker.rpm
+# Update auf neue Version
+sudo dpkg -i ticket-tracker-new.deb
 
-# Windows
-# Run the installer (ticket-tracker-setup.exe)
-
-# macOS
-# Mount the DMG and drag to Applications
+# Deinstallation
+sudo dpkg -r ticket-tracker
 ```
 
-### Build from Source
-
+### Fedora/RHEL
 ```bash
-# 1. Clone the repository
-git clone https://github.com/munnotubbel/jira-ticket-tracker.git
-cd jira-ticket-tracker
+# Installation
+sudo rpm -i ticket-tracker.rpm
 
-# 2. Build for your platform
-make build-linux    # For Linux
-make build-windows  # For Windows
-make build-macos    # For macOS (requires macOS system)
+# Update auf neue Version
+sudo rpm -U ticket-tracker-new.rpm
+
+# Deinstallation
+sudo rpm -e ticket-tracker
+```
+
+### Windows
+```powershell
+# Installation
+ticket-tracker-setup.exe
+
+# Update
+# Einfach neue Version installieren, überschreibt automatisch
+
+# Deinstallation
+# Über Windows-Einstellungen > Apps > Apps & Features
+# ODER
+Control Panel > Programs > Uninstall a Program
+```
+
+### macOS
+```bash
+# Installation
+# DMG öffnen und in Applications ziehen
+
+# Update
+# Neue Version in Applications ziehen, bestätigen dass alte überschrieben wird
+
+# Deinstallation
+# App aus Applications in den Papierkorb ziehen
 ```
 
 ## Usage
@@ -129,7 +148,7 @@ ticket-tracker/
 - **App doesn't start**: Check dependencies and permissions
 - **No sound**: Verify system audio and app permissions
 - **Build fails**: Ensure all development dependencies are installed
-README
+
 ### Debug Output
 Run from terminal to see error messages: `ticket-tracker --debug`
 
