@@ -47,16 +47,16 @@ jobs:
       - name: Prepare Release Directory
         run: |
           VERSION=$(grep '^version = ' Cargo.toml | cut -d '"' -f 2)
-          mkdir -p releases/linux
-          cp target/release/ticket-tracker releases/linux/
-          cp ~/rpmbuild/RPMS/x86_64/ticket-tracker-${VERSION}-*.rpm releases/linux/ || true
-          cp target/debian/ticket-tracker_${VERSION}*.deb releases/linux/ || true
+          mkdir -p release-artifacts/linux
+          cp target/release/ticket-tracker release-artifacts/linux/
+          cp ~/rpmbuild/RPMS/x86_64/ticket-tracker-${VERSION}-*.rpm release-artifacts/linux/ || true
+          cp target/debian/ticket-tracker_${VERSION}*.deb release-artifacts/linux/ || true
           
       - name: Upload Linux Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: linux-release
-          path: releases/linux/
+          path: release-artifacts/linux/*
 
   build-windows:
     runs-on: windows-latest
@@ -76,14 +76,14 @@ jobs:
           
       - name: Prepare Release Directory
         run: |
-          mkdir -p releases/windows
-          cp target/x86_64-pc-windows-gnu/release/ticket-tracker.exe releases/windows/
+          mkdir -p release-artifacts/windows
+          cp target/x86_64-pc-windows-gnu/release/ticket-tracker.exe release-artifacts/windows/
           
       - name: Upload Windows Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: windows-release
-          path: releases/windows/ticket-tracker.exe
+          path: release-artifacts/windows/*
 
   build-macos:
     runs-on: macos-latest
@@ -105,14 +105,14 @@ jobs:
           
       - name: Prepare Release Directory
         run: |
-          mkdir -p releases/macos
-          cp releases/macos/TicketTracker.app/Contents/MacOS/ticket-tracker releases/macos/
+          mkdir -p release-artifacts/macos
+          cp releases/macos/TicketTracker.app/Contents/MacOS/ticket-tracker release-artifacts/macos/
           
       - name: Upload macOS Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: macos-release
-          path: releases/macos/ticket-tracker
+          path: release-artifacts/macos/*
 
   create-release:
     needs: [build-linux, build-windows, build-macos]

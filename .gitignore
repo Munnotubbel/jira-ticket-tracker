@@ -1,1 +1,11 @@
 /target
+/releases
+/rpmbuild
+.rpm
+.deb
+.dmg
+.exe
+.app
+.pkg
+.deb
+.rpm
