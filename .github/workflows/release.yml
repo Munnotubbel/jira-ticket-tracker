@@ -21,21 +21,23 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y build-essential pkg-config \
             libx11-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev \
-            rpm pulseaudio-utils alsa-utils libasound2-dev \
-            cargo gcc make rpm-build
-          
+            rpm pulseaudio-utils alsa-utils libasound2-dev
+
       - name: Setup RPM build environment
         run: |
+          # Install rpm build tools (Ubuntu package names)
+          sudo apt-get install -y rpm
+
+          # Create RPM build directories
           mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
           mkdir -p .rpm
-          
-          # Copy spec file from templates if not exists
-          if [ ! -f .rpm/ticket-tracker.spec ]; then
-            cp packaging/rpm/ticket-tracker.spec .rpm/
-          fi
+
+          # Ensure spec file exists
+          cp packaging/rpm/ticket-tracker.spec .rpm/
           
       - name: Build Binary and Packages
         run: |
+          cargo build --release
           make build-linux
           
       - name: Prepare Release Directory
