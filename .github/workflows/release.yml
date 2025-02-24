@@ -22,7 +22,7 @@ jobs:
           sudo apt-get install -y build-essential pkg-config \
             libx11-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev \
             rpm pulseaudio-utils alsa-utils libasound2-dev \
-            cargo gcc make rpm
+            cargo gcc make
           
       - name: Setup RPM build environment
         run: |
