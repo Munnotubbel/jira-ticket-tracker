@@ -6,7 +6,7 @@ pub use windows::{play_sound, install_autostart, uninstall_autostart};
 #[cfg(target_os = "linux")]
 mod linux;
 #[cfg(target_os = "linux")]
-pub use linux::{install_autostart, uninstall_autostart};
+pub use linux::{play_sound, install_autostart, uninstall_autostart};
 
 #[cfg(target_os = "macos")]
 mod macos;

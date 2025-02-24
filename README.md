@@ -27,11 +27,12 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```bash
 # Debian/Ubuntu
 sudo apt-get update
-sudo apt-get install build-essential pkg-config libx11-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev
+sudo apt-get install build-essential pkg-config libx11-dev libxcb-render0-dev \
+  libxcb-shape0-dev libxcb-xfixes0-dev libasound2-dev
 
 # Fedora
 sudo dnf group install "C Development Tools and Libraries"
-sudo dnf install pkg-config libX11-devel libxcb-devel
+sudo dnf install pkg-config libX11-devel libxcb-devel alsa-lib-devel
 
 # macOS
 xcode-select --install
@@ -128,7 +129,7 @@ ticket-tracker/
 - **App doesn't start**: Check dependencies and permissions
 - **No sound**: Verify system audio and app permissions
 - **Build fails**: Ensure all development dependencies are installed
-
+README
 ### Debug Output
 Run from terminal to see error messages: `ticket-tracker --debug`
 

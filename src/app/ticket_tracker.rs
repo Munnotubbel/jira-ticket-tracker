@@ -53,7 +53,6 @@ impl TicketTracker {
 
         // Lade das Success-Face
         let success_texture = if let Ok(img) = image::load_from_memory(include_bytes!("../../assets/face_100.png")) {
-            println!("Success-Face wurde geladen!");
             let img = img.to_rgba8();
             let size = [img.width() as usize, img.height() as usize];
             let pixels = img.into_raw();
@@ -113,8 +112,7 @@ impl TicketTracker {
         
         // DANN erst den Sound
         if self.settings.sound_enabled {
-            // Sound direkt abspielen, nicht über platform
-            Self::play_success_sound();
+            platform::play_sound();
         }
 
         // Rest der Verarbeitung
@@ -133,12 +131,6 @@ impl TicketTracker {
         });
 
         Ok(())
-    }
-
-    // WICHTIG: Direkte Sound-Implementierung wie im Backup
-    #[cfg(target_os = "windows")]
-    fn play_success_sound() {
-        platform::play_sound();
     }
 
     pub fn install_autostart() -> Result<(), Box<dyn std::error::Error>> {
