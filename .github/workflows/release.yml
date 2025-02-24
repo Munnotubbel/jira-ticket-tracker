@@ -5,6 +5,12 @@ on:
     branches: [ main ]
     tags: [ 'v*' ]
 
+# Add permissions configuration
+permissions:
+  contents: write      # Für Push und Release-Erstellung
+  actions: read       # Für Artifact-Download
+  packages: write     # Falls du später Packages veröffentlichen möchtest
+
 jobs:
   build-linux:
     runs-on: ubuntu-latest
@@ -125,8 +131,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: releases
+          fetch-depth: 0  # Vollständige Git-Historie
           
+      - name: Create releases branch if not exists
+        run: |
+          if ! git ls-remote --heads origin releases | grep releases > /dev/null; then
+            git checkout --orphan releases
+            git rm -rf .
+            git commit --allow-empty -m "Initial releases branch"
+            git push origin releases
+          fi
+          git checkout releases || git checkout -b releases origin/releases
+
       - name: Download All Artifacts
         uses: actions/download-artifact@v4
         

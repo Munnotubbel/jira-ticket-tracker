@@ -48,10 +48,10 @@ xcode-select --install
 # Installation
 sudo dpkg -i ticket-tracker.deb
 
-# Update auf neue Version
+# Update to new version
 sudo dpkg -i ticket-tracker-new.deb
 
-# Deinstallation
+# Uninstall
 sudo dpkg -r ticket-tracker
 ```
 
@@ -60,10 +60,10 @@ sudo dpkg -r ticket-tracker
 # Installation
 sudo rpm -i ticket-tracker.rpm
 
-# Update auf neue Version
+# Update to new version
 sudo rpm -U ticket-tracker-new.rpm
 
-# Deinstallation
+# Uninstall
 sudo rpm -e ticket-tracker
 ```
 
@@ -73,24 +73,24 @@ sudo rpm -e ticket-tracker
 ticket-tracker-setup.exe
 
 # Update
-# Einfach neue Version installieren, überschreibt automatisch
+# Simply install new version, it will automatically replace the old one
 
-# Deinstallation
-# Über Windows-Einstellungen > Apps > Apps & Features
-# ODER
+# Uninstall
+# Via Windows Settings > Apps > Apps & Features
+# OR
 Control Panel > Programs > Uninstall a Program
 ```
 
 ### macOS
 ```bash
 # Installation
-# DMG öffnen und in Applications ziehen
+# Open DMG and drag to Applications
 
 # Update
-# Neue Version in Applications ziehen, bestätigen dass alte überschrieben wird
+# Drag new version to Applications, confirm overwrite
 
-# Deinstallation
-# App aus Applications in den Papierkorb ziehen
+# Uninstall
+# Drag app from Applications to Trash
 ```
 
 ## Usage
