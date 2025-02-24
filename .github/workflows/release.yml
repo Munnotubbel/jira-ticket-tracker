@@ -122,42 +122,4 @@ jobs:
           draft: false
           prerelease: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  update-release-branch:
-    needs: [build-linux, build-windows, build-macos]
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # Full Git history
-          
-      - name: Create releases branch if not exists
-        run: |
-          if ! git ls-remote --heads origin releases | grep releases > /dev/null; then
-            git checkout --orphan releases
-            git rm -rf .
-            git commit --allow-empty -m "Initial releases branch"
-            git push origin releases
-          fi
-          git checkout releases || git checkout -b releases origin/releases
-
-      - name: Download All Artifacts
-        uses: actions/download-artifact@v4
-        
-      - name: Update Release Files
-        run: |
-          rm -rf releases/
-          mkdir -p releases/
-          cp -r linux-release/* releases/
-          cp -r windows-release/* releases/
-          cp -r macos-release/* releases/
-          
-      - name: Commit and Push
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add releases/
-          git commit -m "Update releases from main branch" || echo "No changes to commit"
-          git push origin releases 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
