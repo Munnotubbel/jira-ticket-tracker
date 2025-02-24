@@ -25,15 +25,12 @@ jobs:
 
       - name: Setup RPM build environment
         run: |
-          # Install rpm build tools (Ubuntu package names)
-          sudo apt-get install -y rpm
-
           # Create RPM build directories
           mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
           mkdir -p .rpm
 
-          # Ensure spec file exists
-          cp packaging/rpm/ticket-tracker.spec .rpm/
+          # Copy spec file directly from repository
+          cp .rpm/ticket-tracker.spec ~/rpmbuild/SPECS/
           
       - name: Build Binary and Packages
         run: |
