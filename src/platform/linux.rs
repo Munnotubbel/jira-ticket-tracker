@@ -1,4 +1,30 @@
 use std::io::Write;
+use std::process::Command;
+
+pub fn play_sound() {
+    let sound_bytes = include_bytes!("../../assets/yeah.wav");
+    if let Ok(mut temp_file) = std::fs::File::create("temp_sound.wav") {
+        if std::io::Write::write_all(&mut temp_file, sound_bytes).is_ok() {
+            // Versuche zuerst paplay (PulseAudio)
+            let paplay_result = Command::new("paplay")
+                .arg("temp_sound.wav")
+                .spawn();
+
+            // Wenn paplay fehlschlägt, versuche aplay (ALSA)
+            if paplay_result.is_err() {
+                let _ = Command::new("aplay")
+                    .arg("temp_sound.wav")
+                    .spawn();
+            }
+
+            // Cleanup nach 2 Sekunden
+            std::thread::spawn(|| {
+                std::thread::sleep(std::time::Duration::from_secs(2));
+                let _ = std::fs::remove_file("temp_sound.wav");
+            });
+        }
+    }
+}
 
 pub fn install_autostart() -> Result<(), Box<dyn std::error::Error>> {
     let home = std::env::var("HOME")?;
