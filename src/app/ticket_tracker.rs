@@ -143,8 +143,13 @@ impl TicketTracker {
 }
 
 impl eframe::App for TicketTracker {
-    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+    fn update(&mut self, ctx: &egui::Context, frame: &mut eframe::Frame) {
         let mut submit_requested = false;
+
+        // Fenster verschiebbar machen
+        frame.set_window_pos(self.settings.window_pos);
+        frame.set_always_on_top(true);
+        frame.drag_window();  // Aktiviert das Verschieben des Fensters
 
         let display_texture = if let Some(start_time) = self.celebration_start {
             if start_time.elapsed() < Duration::from_secs(1) {
@@ -157,10 +162,9 @@ impl eframe::App for TicketTracker {
             &self.face_textures[self.calculate_face_index()]
         };
 
-        egui::Area::new("draggable_area")
-            .movable(true)
-            .interactable(true)
-            .default_pos(self.settings.window_pos)
+        // Fester Container für den Inhalt
+        egui::CentralPanel::default()
+            .frame(egui::Frame::none())
             .show(ctx, |ui| {
                 // WICHTIG: Spacing auf 0 setzen
                 ui.spacing_mut().item_spacing = egui::vec2(0.0, 0.0);

@@ -13,6 +13,8 @@ pub fn create_window_options() -> NativeOptions {
         follow_system_theme: false,
         hardware_acceleration: eframe::HardwareAcceleration::Required,
         active: true,
+        drag_and_drop_support: true,
+        resizable: false,
         ..Default::default()
     }
 }

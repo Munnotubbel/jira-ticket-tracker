@@ -40,12 +40,12 @@ impl TicketInput {
 
                 let response = ui.add(text_edit);
                 
-                // Nur die untere schwarze Linie zeichnen
+                // Untere schwarze Linie 4px weiter unten zeichnen
                 let line_rect = response.rect;
                 ui.painter().line_segment(
                     [
-                        line_rect.left_bottom() + egui::vec2(0.0, -2.0),
-                        line_rect.right_bottom() + egui::vec2(0.0, -2.0)
+                        line_rect.left_bottom() + egui::vec2(0.0, 2.0),
+                        line_rect.right_bottom() + egui::vec2(0.0, 2.0)
                     ],
                     egui::Stroke::new(1.0, egui::Color32::BLACK)
                 );
